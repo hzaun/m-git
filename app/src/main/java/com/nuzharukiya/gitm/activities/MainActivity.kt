@@ -46,7 +46,10 @@ class MainActivity : AppCompatActivity(),
     override fun displayPR(prModel: PullRequestModel) {//TODO
     }
 
-    override fun stopLoader() {//TODO
+    override fun showLoader() {//TODO
+    }
+
+    override fun dismissLoader() {//TODO
     }
 
     override fun checkNetwork() {//TODO

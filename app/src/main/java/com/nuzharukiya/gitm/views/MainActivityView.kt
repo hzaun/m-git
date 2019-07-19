@@ -13,7 +13,9 @@ interface MainActivityView {
 
     fun displayPR(prModel: PullRequestModel)
 
-    fun stopLoader()
+    fun showLoader()
+
+    fun dismissLoader()
 
     fun checkNetwork()
 }
