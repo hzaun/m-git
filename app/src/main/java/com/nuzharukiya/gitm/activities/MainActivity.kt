@@ -9,9 +9,11 @@ import com.nuzharukiya.gitm.R
 import butterknife.OnClick
 import com.nuzharukiya.gitm.models.PullRequestModel
 import com.nuzharukiya.gitm.presenters.MainActivityPresenter
+import com.nuzharukiya.gitm.utils.ActivityBase
 import com.nuzharukiya.gitm.views.MainActivityView
 
 class MainActivity : AppCompatActivity(),
+        ActivityBase,
         MainActivityView {
 
     private lateinit var mContext: Context
@@ -21,6 +23,18 @@ class MainActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+    }
+
+    override fun initApp() {//TODO
+    }
+
+    override fun initViews() {//TODO
+    }
+
+    override fun initData() {//TODO
+    }
+
+    override fun runFactory() {//TODO
     }
 
     override fun verifyUserRepo(): Boolean {//TODO
