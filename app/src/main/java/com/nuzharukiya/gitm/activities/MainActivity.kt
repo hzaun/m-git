@@ -32,6 +32,9 @@ class MainActivity : AppCompatActivity(),
         mContext = this
         baseUtils = BaseUtils(mContext)
         presenter = MainActivityPresenter(this)
+
+        initViews()
+        initData()
     }
 
     override fun initViews() {
@@ -40,8 +43,12 @@ class MainActivity : AppCompatActivity(),
 
     private fun initLinkListener() {
         ibLookup.setOnClickListener {
-            if (checkNetwork() && verifyUserRepo()) {
-                fetchPRs(getUserRepo())
+            if (checkNetwork()) {
+                if (verifyUserRepo()) {
+                    fetchPRs(getUserRepo())
+                } else {
+                    showSnackbar(R.string.input_required)
+                }
             }
         }
     }
@@ -71,9 +78,9 @@ class MainActivity : AppCompatActivity(),
     override fun checkNetwork(): Boolean {
         if (baseUtils.isOnline()) {
             return true
-        } else {
-            showSnackbar(resMessage = R.string.no_internet)
         }
+
+        showSnackbar(resMessage = R.string.no_internet)
         return false
     }
 

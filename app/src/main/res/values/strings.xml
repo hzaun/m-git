@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">Git M</string>
+    <string name="app_name">Meesho Git</string>
     <string name="no_internet">No internet available!</string>
     <string name="no_data">Looks like there\'s no data available…</string>
     <string name="input_required">Enter a user and repo to begin!</string>
+    <string name="search_for_pull_requests">Search for pull requests</string>
 </resources>

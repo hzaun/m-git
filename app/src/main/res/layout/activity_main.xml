@@ -13,7 +13,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_medium"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/ibLookup"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -23,6 +23,7 @@
         android:layout_height="0dp"
         android:layout_margin="@dimen/margin_small"
         android:background="@color/colorPrimary"
+        android:contentDescription="@string/search_for_pull_requests"
         android:padding="@dimen/margin_small"
         android:src="@drawable/ic_search"
         app:layout_constraintBottom_toBottomOf="@id/etId"
