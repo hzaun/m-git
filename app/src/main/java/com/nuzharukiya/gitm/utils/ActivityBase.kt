@@ -20,9 +20,4 @@ interface ActivityBase {
      * Initialize the data
      */
     fun initData()
-
-    /**
-     * Start doing the work
-     */
-    fun runFactory()
 }

@@ -5,7 +5,6 @@
     android:id="@+id/clParent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/margin_medium"
     tools:context=".activities.MainActivity">
 
     <EditText
@@ -17,14 +16,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
+    <Button
         android:id="@+id/ibLookup"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_margin="@dimen/margin_small"
-        android:background="@color/colorPrimary"
-        android:padding="@dimen/margin_small"
-        android:src="@drawable/ic_search"
+        android:backgroundTint="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="@id/etId"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/etId" />

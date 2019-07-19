@@ -17,5 +17,9 @@ interface MainActivityView {
 
     fun dismissLoader()
 
-    fun checkNetwork()
+    fun checkNetwork(): Boolean
+
+    fun showSnackbar(resMessage: Int)
+
+    fun showNoData(resMessage: Int = -1, bNoData: Boolean = true)
 }
