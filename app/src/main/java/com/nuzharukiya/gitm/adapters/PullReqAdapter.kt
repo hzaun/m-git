@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.nuzharukiya.gitm.R
 import com.nuzharukiya.gitm.models.PullRequestModel
+import com.nuzharukiya.gitm.utils.TimeUtils
 import com.nuzharukiya.gitm.utils.inflate
 
 /**
@@ -39,7 +40,9 @@ class PullReqAdapter(private val pullRequests: ArrayList<PullRequestModel>) : Re
 
         fun onBind(prModel: PullRequestModel) {
             tvTitle.text = prModel.title
-            tvDescription.text = ("""#${prModel.number} opened on ${prModel.created_at} by ${prModel.user.login}""") //TODO: format time
+            tvDescription.text = ("#${prModel.number} " +
+                    "opened on ${TimeUtils.getInstance().convertDateTimeToSimpleFormat(prModel.created_at)} " +
+                    "by ${prModel.user.login}")
         }
     }
 }

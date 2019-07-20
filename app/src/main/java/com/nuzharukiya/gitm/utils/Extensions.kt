@@ -17,3 +17,10 @@ import android.view.ViewGroup
 fun ViewGroup.inflate(layout: Int): View {
     return LayoutInflater.from(context).inflate(layout, this, false)
 }
+
+/**
+ * Checks for a valid date format
+ */
+fun String?.isStringDateInvalid(): Boolean {
+    return (this.isNullOrEmpty() || this.equals("null", true))
+}
