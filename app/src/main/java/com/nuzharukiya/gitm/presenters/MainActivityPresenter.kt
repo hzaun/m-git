@@ -1,6 +1,8 @@
 package com.nuzharukiya.gitm.presenters
 
 import android.util.Log
+import com.nuzharukiya.gitm.models.PullRequestModel
+import com.nuzharukiya.gitm.models.UserModel
 import com.nuzharukiya.gitm.utils.GMUrls
 import com.nuzharukiya.gitm.views.MainActivityView
 import com.rx2androidnetworking.Rx2AndroidNetworking
@@ -48,6 +50,23 @@ class MainActivityPresenter(private val view: MainActivityView) {
     }
 
     private fun parseResponse(jsonArray: JSONArray) {
-        // TODO:
+        val size = jsonArray.length()
+        val prList = ArrayList<PullRequestModel>()
+
+        for (i in 0 until size) {
+            val o = jsonArray.optJSONObject(i)
+
+            prList.add(PullRequestModel(
+                    o.optString("title"),
+                    o.optInt("number"),
+                    UserModel(
+                            o.optJSONObject("user")
+                                    .optString("login")
+                    ),
+                    o.optString("created_at")
+            ))
+        }
+
+//        view.displayPR()
     }
 }
