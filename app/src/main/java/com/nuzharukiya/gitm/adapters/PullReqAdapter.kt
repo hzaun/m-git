@@ -39,7 +39,7 @@ class PullReqAdapter(private val pullRequests: ArrayList<PullRequestModel>) : Re
 
         fun onBind(prModel: PullRequestModel) {
             tvTitle.text = prModel.title
-            tvDescription.text = ("""#${prModel.title} opened on ${prModel.created_at} by ${prModel.user.login}""") //TODO: format time
+            tvDescription.text = ("""#${prModel.number} opened on ${prModel.created_at} by ${prModel.user.login}""") //TODO: format time
         }
     }
 }
