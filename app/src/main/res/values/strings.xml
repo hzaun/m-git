@@ -6,4 +6,9 @@
     <string name="search_for_pull_requests">Search for pull requests</string>
     <string name="placeholder_pr_title">Pull request title</string>
     <string name="placeholder_pr_desc">Info</string>
+    <string name="hint_owner">&lt;owner-name&gt;</string>
+    <string name="separater">/</string>
+    <string name="hint_repo">&lt;repository-name&gt;</string>
+    <string name="owner_required">Owner required</string>
+    <string name="repo_required">Repository required</string>
 </resources>

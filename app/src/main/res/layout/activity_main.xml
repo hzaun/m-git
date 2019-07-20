@@ -5,30 +5,74 @@
     android:id="@+id/clParent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/margin_medium"
     tools:context=".activities.MainActivity">
 
-    <EditText
-        android:id="@+id/etId"
+    <android.support.v7.widget.CardView
+        android:id="@+id/cvSearch"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_medium"
-        app:layout_constraintEnd_toStartOf="@id/acibLookup"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <android.support.v7.widget.AppCompatImageButton
-        android:id="@+id/acibLookup"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_margin="@dimen/margin_small"
-        android:background="@color/colorPrimary"
-        android:contentDescription="@string/search_for_pull_requests"
-        android:padding="@dimen/margin_small"
-        app:layout_constraintBottom_toBottomOf="@id/etId"
+        android:background="@drawable/elevation_bg"
+        android:backgroundTint="@color/colorPrimary"
+        android:paddingBottom="@dimen/margin_medium"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/etId"
-        app:srcCompat="@drawable/ic_search" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_medium"
+            android:background="@drawable/rounded_edge"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:weightSum="10">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:inputType="none"
+                android:padding="@dimen/margin_small"
+                app:srcCompat="@drawable/ic_git" />
+
+            <EditText
+                android:id="@+id/etUser"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:background="@color/white"
+                android:gravity="end"
+                android:hint="@string/hint_owner"
+                android:inputType="textAutoComplete" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/separater" />
+
+            <EditText
+                android:id="@+id/etRepo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:background="@color/white"
+                android:gravity="start"
+                android:hint="@string/hint_repo"
+                android:inputType="textAutoComplete" />
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/acivLookup"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:contentDescription="@string/search_for_pull_requests"
+                android:padding="@dimen/margin_small"
+                android:tint="@color/colorPrimary"
+                app:srcCompat="@drawable/ic_search" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
 
     <TextView
         android:id="@+id/tvNoData"
@@ -39,7 +83,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etId" />
+        app:layout_constraintTop_toBottomOf="@id/cvSearch" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvPullRequests"
@@ -48,7 +92,7 @@
         android:layout_marginTop="@dimen/margin_medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etId" />
+        app:layout_constraintTop_toBottomOf="@id/cvSearch" />
 
     <ProgressBar
         android:id="@+id/pbLoader"
@@ -62,5 +106,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etId" />
+        app:layout_constraintTop_toBottomOf="@id/cvSearch" />
 </android.support.constraint.ConstraintLayout>

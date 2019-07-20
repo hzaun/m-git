@@ -32,11 +32,14 @@ class PullReqAdapter(private val pullRequests: ArrayList<PullRequestModel>) : Re
         val prModel = pullRequests[position]
 
         holder.onBind(prModel)
+
+        holder.vDivider.visibility = if (position == pullRequests.size - 1) View.GONE else View.VISIBLE
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val tvTitle = itemView.findViewById<TextView>(R.id.tvTitle)
         private val tvDescription = itemView.findViewById<TextView>(R.id.tvDescription)
+        internal val vDivider = itemView.findViewById<View>(R.id.vDivider)
 
         fun onBind(prModel: PullRequestModel) {
             tvTitle.text = prModel.title

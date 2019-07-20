@@ -7,9 +7,9 @@ import com.nuzharukiya.gitm.models.PullRequestModel
  */
 interface MainActivityView {
 
-    fun verifyUserRepo(): Boolean
+    fun verifyUserRepo(bShowMessage: Boolean = false): Boolean
 
-    fun fetchPRs(userRepo: String)
+    fun fetchPRs(user: String, repo: String)
 
     fun displayPR(prList: List<PullRequestModel>)
 

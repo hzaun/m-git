@@ -50,12 +50,11 @@ class MainActivity : AppCompatActivity(),
     }
 
     private fun initLinkListener() {
-        acibLookup.setOnClickListener {
+        acivLookup.setOnClickListener {
             if (checkNetwork()) {
-                if (verifyUserRepo()) {
-                    fetchPRs(getUserRepo())
+                if (verifyUserRepo(bShowMessage = true)) {
+                    fetchPRs(getUser(), getRepo())
                 } else {
-                    showSnackbar(R.string.input_required)
                     dismissLoader()
                 }
             }
@@ -66,11 +65,24 @@ class MainActivity : AppCompatActivity(),
         showNoData()
     }
 
-    override fun verifyUserRepo(): Boolean {
-        return getUserRepo().isNotEmpty() // TODO
+    override fun verifyUserRepo(bShowMessage: Boolean): Boolean {
+        val user = etUser.text.toString().trim()
+        val repo = etRepo.text.toString().trim()
+
+        if (user.isNotEmpty() && repo.isNotEmpty()) return true
+
+        if (bShowMessage) {
+            if (user.isEmpty()) {
+                showSnackbar(R.string.owner_required)
+            } else if (repo.isEmpty()) {
+                showSnackbar(R.string.repo_required)
+            }
+        }
+
+        return false
     }
 
-    override fun fetchPRs(userRepo: String) {
+    override fun fetchPRs(user: String, repo: String) {
         presenter.getPRObservable("hzaun", "windows-wifi-hotspot")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -129,7 +141,7 @@ class MainActivity : AppCompatActivity(),
             if (resMessage > 0) {
                 tvNoData.text = resources.getString(resMessage)
             } else {
-                tvNoData.text = resources.getString(if (getUserRepo().isEmpty()) R.string.input_required else R.string.no_data)
+                tvNoData.text = resources.getString(if (!verifyUserRepo()) R.string.input_required else R.string.no_data)
             }
         }
     }
@@ -138,7 +150,11 @@ class MainActivity : AppCompatActivity(),
         return pbLoader.visibility == View.VISIBLE
     }
 
-    private fun getUserRepo(): String {
-        return etId.text.toString().trim()
+    private fun getUser(): String {
+        return etUser.text.toString().trim()
+    }
+
+    private fun getRepo(): String {
+        return etRepo.text.toString().trim()
     }
 }
