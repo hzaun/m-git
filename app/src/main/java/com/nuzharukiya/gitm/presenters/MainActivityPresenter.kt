@@ -67,6 +67,6 @@ class MainActivityPresenter(private val view: MainActivityView) {
             ))
         }
 
-//        view.displayPR()
+        view.displayPR(prList)
     }
 }

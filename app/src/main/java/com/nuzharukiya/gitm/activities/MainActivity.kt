@@ -56,6 +56,7 @@ class MainActivity : AppCompatActivity(),
                     fetchPRs(getUserRepo())
                 } else {
                     showSnackbar(R.string.input_required)
+                    dismissLoader()
                 }
             }
         }
@@ -76,10 +77,14 @@ class MainActivity : AppCompatActivity(),
                 .subscribe(presenter.getPRObserver())
     }
 
-    override fun displayPR(prModel: PullRequestModel) {//TODO
+    override fun displayPR(prList: List<PullRequestModel>) {
+        pullRequests.clear()
+        if (prList.isNotEmpty()) pullRequests.addAll(prList)
+
+        setAdapter()
     }
 
-    fun initAdapter() {
+    private fun setAdapter() {
         if (prAdapter == null) {
             prAdapter = PullReqAdapter(pullRequests)
 
@@ -118,7 +123,7 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun showNoData(resMessage: Int, bNoData: Boolean) {
-        tvNoData.visibility = if (bNoData) View.GONE else View.VISIBLE
+        tvNoData.visibility = if (bNoData) View.VISIBLE else View.GONE
 
         if (bNoData && !isLoaderVisible()) {
             if (resMessage > 0) {

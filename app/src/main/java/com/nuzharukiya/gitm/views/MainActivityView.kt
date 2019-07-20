@@ -11,7 +11,7 @@ interface MainActivityView {
 
     fun fetchPRs(userRepo: String)
 
-    fun displayPR(prModel: PullRequestModel)
+    fun displayPR(prList: List<PullRequestModel>)
 
     fun showLoader()
 
