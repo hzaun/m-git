@@ -3,4 +3,6 @@
     <color name="colorPrimary">#E6487A</color>
     <color name="colorPrimaryDark">#E6497B</color>
     <color name="colorAccent">#FEFEFE</color>
+
+    <color name="gitGreen">#5EB76A</color>
 </resources>

@@ -13,19 +13,19 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_medium"
-        app:layout_constraintEnd_toStartOf="@id/ibLookup"
+        app:layout_constraintEnd_toStartOf="@id/acibLookup"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
-        android:id="@+id/ibLookup"
+    <android.support.v7.widget.AppCompatImageButton
+        android:id="@+id/acibLookup"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_margin="@dimen/margin_small"
         android:background="@color/colorPrimary"
         android:contentDescription="@string/search_for_pull_requests"
         android:padding="@dimen/margin_small"
-        android:src="@drawable/ic_search"
+        app:srcCompat="@drawable/ic_search"
         app:layout_constraintBottom_toBottomOf="@id/etId"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/etId" />
@@ -38,6 +38,16 @@
         android:text="@string/no_data"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etId" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvPullRequests"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/etId" />
 
