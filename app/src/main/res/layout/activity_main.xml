@@ -44,7 +44,9 @@
                 android:background="@color/white"
                 android:gravity="end"
                 android:hint="@string/hint_owner"
-                android:inputType="textAutoComplete" />
+                android:imeOptions="actionNext"
+                android:inputType="textAutoComplete"
+                android:nextFocusForward="@id/etRepo" />
 
             <TextView
                 android:layout_width="0dp"
@@ -61,6 +63,7 @@
                 android:background="@color/white"
                 android:gravity="start"
                 android:hint="@string/hint_repo"
+                android:imeOptions="actionSearch"
                 android:inputType="textAutoComplete" />
 
             <android.support.v7.widget.AppCompatImageView
@@ -91,9 +94,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_medium"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cvSearch" />
+        app:layout_constraintTop_toBottomOf="@id/cvSearch"
+        app:layout_constraintVertical_bias="0" />
 
     <ProgressBar
         android:id="@+id/pbLoader"

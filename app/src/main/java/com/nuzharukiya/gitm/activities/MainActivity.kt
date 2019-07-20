@@ -17,6 +17,9 @@ import com.nuzharukiya.gitm.views.MainActivityView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
+import android.view.KeyEvent
 
 class MainActivity : AppCompatActivity(),
         ActivityBase,
@@ -50,13 +53,27 @@ class MainActivity : AppCompatActivity(),
     }
 
     private fun initLinkListener() {
-        acivLookup.setOnClickListener {
-            if (checkNetwork()) {
-                if (verifyUserRepo(bShowMessage = true)) {
-                    fetchPRs(getUser(), getRepo())
-                } else {
-                    dismissLoader()
+        etRepo.setOnEditorActionListener(object : TextView.OnEditorActionListener {
+            override fun onEditorAction(v: TextView, actionId: Int, event: KeyEvent): Boolean {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    getPRs()
+                    return true
                 }
+                return false
+            }
+        })
+
+        acivLookup.setOnClickListener {
+            getPRs()
+        }
+    }
+
+    private fun getPRs() {
+        if (checkNetwork()) {
+            if (verifyUserRepo(bShowMessage = true)) {
+                fetchPRs(getUser(), getRepo())
+            } else {
+                dismissLoader()
             }
         }
     }

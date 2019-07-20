@@ -1,6 +1,7 @@
 package com.nuzharukiya.gitm.presenters
 
 import android.util.Log
+import com.nuzharukiya.gitm.R
 import com.nuzharukiya.gitm.models.PullRequestModel
 import com.nuzharukiya.gitm.models.UserModel
 import com.nuzharukiya.gitm.utils.GMUrls
@@ -39,7 +40,7 @@ class MainActivityPresenter(private val view: MainActivityView) {
             }
 
             override fun onError(e: Throwable) {
-                view.showSnackbar(sMessage = e.message ?: "")
+                view.showSnackbar(resMessage = R.string.check_owner_repo)
                 view.dismissLoader()
             }
 

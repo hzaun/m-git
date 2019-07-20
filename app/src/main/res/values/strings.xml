@@ -11,4 +11,5 @@
     <string name="hint_repo">&lt;repository-name&gt;</string>
     <string name="owner_required">Owner required</string>
     <string name="repo_required">Repository required</string>
+    <string name="check_owner_repo">Looks like the owner or repo doesn\'t exist</string>
 </resources>
