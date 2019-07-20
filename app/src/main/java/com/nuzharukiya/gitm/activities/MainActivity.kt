@@ -6,7 +6,10 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
+import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import com.nuzharukiya.gitm.R
 import com.nuzharukiya.gitm.adapters.PullReqAdapter
 import com.nuzharukiya.gitm.models.PullRequestModel
@@ -17,9 +20,6 @@ import com.nuzharukiya.gitm.views.MainActivityView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
-import android.view.inputmethod.EditorInfo
-import android.widget.TextView
-import android.view.KeyEvent
 
 class MainActivity : AppCompatActivity(),
         ActivityBase,
@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity(),
 
     private fun initLinkListener() {
         etRepo.setOnEditorActionListener(object : TextView.OnEditorActionListener {
-            override fun onEditorAction(v: TextView, actionId: Int, event: KeyEvent): Boolean {
+            override fun onEditorAction(v: TextView, actionId: Int, event: KeyEvent?): Boolean {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     getPRs()
                     return true
