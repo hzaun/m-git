@@ -11,6 +11,8 @@ import com.nuzharukiya.gitm.presenters.MainActivityPresenter
 import com.nuzharukiya.gitm.utils.ActivityBase
 import com.nuzharukiya.gitm.utils.BaseUtils
 import com.nuzharukiya.gitm.views.MainActivityView
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(),
@@ -61,7 +63,11 @@ class MainActivity : AppCompatActivity(),
         return getUserRepo().isNotEmpty() // TODO
     }
 
-    override fun fetchPRs(userRepo: String) {//TODO
+    override fun fetchPRs(userRepo: String) {
+        presenter.getPRObservable("hzaun", "windows-wifi-hotspot")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(presenter.getPRObserver())
     }
 
     override fun displayPR(prModel: PullRequestModel) {//TODO
@@ -77,6 +83,8 @@ class MainActivity : AppCompatActivity(),
 
     override fun checkNetwork(): Boolean {
         if (baseUtils.isOnline()) {
+            showLoader()
+
             return true
         }
 
@@ -84,8 +92,11 @@ class MainActivity : AppCompatActivity(),
         return false
     }
 
-    override fun showSnackbar(resMessage: Int) {
-        Snackbar.make(clParent, resources.getString(resMessage), Snackbar.LENGTH_LONG).show()
+    override fun showSnackbar(resMessage: Int, sMessage: String) {
+        if (sMessage.isNotEmpty())
+            Snackbar.make(clParent, sMessage, Snackbar.LENGTH_LONG).show()
+        else if (resMessage > 0)
+            Snackbar.make(clParent, resources.getString(resMessage), Snackbar.LENGTH_LONG).show()
     }
 
     override fun showNoData(resMessage: Int, bNoData: Boolean) {

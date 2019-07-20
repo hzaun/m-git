@@ -19,7 +19,7 @@ interface MainActivityView {
 
     fun checkNetwork(): Boolean
 
-    fun showSnackbar(resMessage: Int)
+    fun showSnackbar(resMessage: Int = -1, sMessage: String = "")
 
     fun showNoData(resMessage: Int = -1, bNoData: Boolean = true)
 }
