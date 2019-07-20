@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun fetchPRs(user: String, repo: String) {
-        presenter.getPRObservable("hzaun", "windows-wifi-hotspot")
+        presenter.getPRObservable(user, repo)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(presenter.getPRObserver())

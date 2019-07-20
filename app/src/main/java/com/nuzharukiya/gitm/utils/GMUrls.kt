@@ -22,7 +22,7 @@ interface GMUrls {
                     SCHEME,
                     BASE_URL,
                     generatePath(owner, repos),
-                    "state=$STATE_ALL", // TODO: Change
+                    "state=$STATE_OPEN", // TODO: Change
                     null)
 
             return uri.toString()
