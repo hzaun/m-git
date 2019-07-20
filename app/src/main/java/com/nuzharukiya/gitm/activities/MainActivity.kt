@@ -4,8 +4,11 @@ import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.DefaultItemAnimator
+import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.nuzharukiya.gitm.R
+import com.nuzharukiya.gitm.adapters.PullReqAdapter
 import com.nuzharukiya.gitm.models.PullRequestModel
 import com.nuzharukiya.gitm.presenters.MainActivityPresenter
 import com.nuzharukiya.gitm.utils.ActivityBase
@@ -22,6 +25,9 @@ class MainActivity : AppCompatActivity(),
     private lateinit var mContext: Context
     private lateinit var baseUtils: BaseUtils
     private lateinit var presenter: MainActivityPresenter
+
+    private var prAdapter: PullReqAdapter? = null
+    private val pullRequests = ArrayList<PullRequestModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +50,7 @@ class MainActivity : AppCompatActivity(),
     }
 
     private fun initLinkListener() {
-        ibLookup.setOnClickListener {
+        acibLookup.setOnClickListener {
             if (checkNetwork()) {
                 if (verifyUserRepo()) {
                     fetchPRs(getUserRepo())
@@ -71,6 +77,18 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun displayPR(prModel: PullRequestModel) {//TODO
+    }
+
+    fun initAdapter() {
+        if (prAdapter == null) {
+            prAdapter = PullReqAdapter(pullRequests)
+
+            rvPullRequests.itemAnimator = DefaultItemAnimator()
+            rvPullRequests.layoutManager = LinearLayoutManager(mContext)
+            rvPullRequests.adapter = prAdapter
+        } else prAdapter?.notifyDataSetChanged()
+
+        showNoData(bNoData = pullRequests.isEmpty())
     }
 
     override fun showLoader() {
@@ -103,7 +121,11 @@ class MainActivity : AppCompatActivity(),
         tvNoData.visibility = if (bNoData) View.GONE else View.VISIBLE
 
         if (bNoData && !isLoaderVisible()) {
-            tvNoData.text = resources.getString(if (getUserRepo().isEmpty()) R.string.input_required else R.string.no_data)
+            if (resMessage > 0) {
+                tvNoData.text = resources.getString(resMessage)
+            } else {
+                tvNoData.text = resources.getString(if (getUserRepo().isEmpty()) R.string.input_required else R.string.no_data)
+            }
         }
     }
 
