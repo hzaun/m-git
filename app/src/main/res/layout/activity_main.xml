@@ -5,6 +5,7 @@
     android:id="@+id/clParent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".activities.MainActivity">
 
     <android.support.v7.widget.CardView
@@ -56,7 +57,7 @@
                 android:id="@+id/etRepo"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
+                android:layout_weight="4"
                 android:background="@color/white"
                 android:gravity="start"
                 android:hint="@string/hint_repo"
@@ -66,7 +67,7 @@
                 android:id="@+id/acivLookup"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:layout_weight="1"
                 android:contentDescription="@string/search_for_pull_requests"
                 android:padding="@dimen/margin_small"
                 android:tint="@color/colorPrimary"
