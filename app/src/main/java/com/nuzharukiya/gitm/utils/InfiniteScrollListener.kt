@@ -21,9 +21,12 @@ abstract class InfiniteScrollListener(private var layoutManager: LinearLayoutMan
                 loadMoreItems()
             }
         }
+
+        onSetScrolled(layoutManager.findFirstCompletelyVisibleItemPosition() < visibleItemCount)
     }
 
     protected abstract fun loadMoreItems()
+    protected abstract fun onSetScrolled(bFirstSetVisible: Boolean)
     abstract fun isLastPage(): Boolean
     abstract fun isLoading(): Boolean
 }

@@ -65,6 +65,14 @@ class MainActivity : AppCompatActivity(),
         initLinkListener()
 
         setPRAdapter()
+        scrollToTop()
+    }
+
+    private fun scrollToTop() {
+        fabScrollToTop.setOnClickListener {
+            rvPullRequests.smoothScrollToPosition(0)
+        }
+        fabScrollToTop.hide()
     }
 
     private fun checkForNext() {
@@ -198,6 +206,10 @@ class MainActivity : AppCompatActivity(),
                 loadNextPage()
             }
 
+            override fun onSetScrolled(bFirstSetVisible: Boolean) {
+                reflectOnScrollToTop(bFirstSetVisible)
+            }
+
             override fun isLastPage(): Boolean {
                 return bIsLastPage
             }
@@ -206,6 +218,13 @@ class MainActivity : AppCompatActivity(),
                 return bIsLoading
             }
         })
+    }
+
+    private fun reflectOnScrollToTop(bHide: Boolean = false) {
+        if (bHide)
+            fabScrollToTop.hide()
+        else
+            fabScrollToTop.show()
     }
 
     private fun loadNextPage() {
