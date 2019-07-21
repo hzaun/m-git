@@ -168,10 +168,19 @@ class MainActivity : AppCompatActivity(),
                 .subscribe(presenter.getPRObserver())
     }
 
-    override fun displayPR(prList: List<PullRequestModel>) {
+    override fun displayPR(prList: List<PullRequestModel>?) {
+        if (prList == null) {
+            prAdapter?.clear()
+            prAdapter?.notifyDataSetChanged()
+
+            showNoData(bNoData = prAdapter?.isEmpty() == true)
+
+            return
+        }
+
         if (CUR_PAGE == 1) {
             prAdapter?.clear()
-            if(prList.isEmpty()) prAdapter?.notifyDataSetChanged()
+            if (prList.isEmpty()) prAdapter?.notifyDataSetChanged()
         } else {
             prAdapter?.removeLoadingFooter()
         }
@@ -183,7 +192,7 @@ class MainActivity : AppCompatActivity(),
         }
         bIsLoading = false
 
-        showNoData(bNoData = prAdapter?.isEmpty() == true)
+        showNoData(resMessage = R.string.no_open_prs, bNoData = prAdapter?.isEmpty() == true)
     }
 
     private fun setPRAdapter() {
@@ -264,7 +273,7 @@ class MainActivity : AppCompatActivity(),
     override fun showNoData(resMessage: Int, bNoData: Boolean) {
         tvNoData.visibility = if (bNoData) View.VISIBLE else View.GONE
 
-        if (bNoData && !isLoaderVisible()) {
+        if (bNoData) {
             if (resMessage > 0) {
                 tvNoData.text = resources.getString(resMessage)
             } else {

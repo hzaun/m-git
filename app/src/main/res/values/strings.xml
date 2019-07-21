@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">Meesho Git</string>
     <string name="no_internet">No internet available!</string>
-    <string name="no_data">Looks like there\'s no data available…</string>
+    <string name="no_data">No data available…</string>
+    <string name="no_open_prs">Looks like there are no open pull requests for this repository…</string>
     <string name="input_required">Enter an owner and repo to begin!</string>
     <string name="search_for_pull_requests">Search for pull requests</string>
     <string name="placeholder_pr_title">Pull request title</string>
