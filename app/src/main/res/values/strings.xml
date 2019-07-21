@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Meesho Git</string>
+    <string name="app_name">Git-M</string>
     <string name="no_internet">No internet available!</string>
     <string name="no_data">No data available…</string>
     <string name="no_open_prs">Looks like there are no open pull requests for this repository…</string>
@@ -14,4 +14,11 @@
     <string name="repo_required">Repository required</string>
     <string name="check_owner_repo">Looks like the owner or repo doesn\'t exist</string>
     <string name="invalid_username">Owner name is invalid</string>
+    <string name="info_api">API Used: https://developer.github.com/v3/</string>
+    <string name="label_author">Author</string>
+    <string name="info_author">Name: Nuzha Rukiya</string>
+    <string name="info_author_git">Git: github/hzaun</string>
+    <string name="placeholder_version">Version 1.0</string>
+    <string name="app_version">Version %1$s</string>
+    <string name="about">About</string>
 </resources>

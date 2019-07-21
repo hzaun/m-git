@@ -22,4 +22,6 @@ interface MainActivityView {
     fun showSnackbar(resMessage: Int = -1, sMessage: String = "")
 
     fun showNoData(resMessage: Int = -1, bNoData: Boolean = true)
+
+    fun showInfoDialog()
 }

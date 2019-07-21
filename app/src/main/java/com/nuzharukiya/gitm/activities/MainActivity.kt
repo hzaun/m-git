@@ -1,14 +1,20 @@
 package com.nuzharukiya.gitm.activities
 
+import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.Gravity
 import android.view.KeyEvent
 import android.view.View
+import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
+import android.widget.FrameLayout
 import android.widget.TextView
 import com.nuzharukiya.gitm.R
 import com.nuzharukiya.gitm.adapters.PullReqAdapter
@@ -16,14 +22,12 @@ import com.nuzharukiya.gitm.models.PullRequestModel
 import com.nuzharukiya.gitm.presenters.MainActivityPresenter
 import com.nuzharukiya.gitm.utils.ActivityBase
 import com.nuzharukiya.gitm.utils.BaseUtils
+import com.nuzharukiya.gitm.utils.InfiniteScrollListener
 import com.nuzharukiya.gitm.utils.ValidationUtils
 import com.nuzharukiya.gitm.views.MainActivityView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
-import android.text.Editable
-import android.text.TextWatcher
-import com.nuzharukiya.gitm.utils.InfiniteScrollListener
 
 class MainActivity : AppCompatActivity(),
         ActivityBase,
@@ -42,6 +46,9 @@ class MainActivity : AppCompatActivity(),
     private var CUR_PAGE = 1
     private var bIsLoading = false
     private var bIsLastPage = false
+
+    // Info Dialog
+    private var mDialog: Dialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,6 +73,16 @@ class MainActivity : AppCompatActivity(),
 
         setPRAdapter()
         scrollToTop()
+
+        initAppInfo()
+    }
+
+    private fun initAppInfo() {
+        acivGit.setOnLongClickListener {
+            showInfoDialog()
+
+            true
+        }
     }
 
     private fun scrollToTop() {
@@ -282,8 +299,26 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
-    private fun isLoaderVisible(): Boolean {
-        return pbLoader.visibility == View.VISIBLE
+    override fun showInfoDialog() {
+        if (mDialog == null) {
+            mDialog = Dialog(mContext)
+            mDialog?.setContentView(R.layout.dialog_info)
+
+            mDialog?.findViewById<TextView>(R.id.tvVersion)?.text = resources.getString(R.string.app_version, baseUtils.getAppVersion())
+
+            mDialog?.window!!.setBackgroundDrawable(null)
+
+            val window = mDialog?.window
+            val wlp = window!!.attributes
+
+            wlp.gravity = Gravity.CENTER
+            @Suppress("DEPRECATION")
+            wlp.flags = wlp.flags and WindowManager.LayoutParams.FLAG_BLUR_BEHIND.inv()
+            window.attributes = wlp
+        }
+        mDialog?.window!!.setLayout(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT)
+        mDialog?.window!!.setGravity(Gravity.CENTER)
+        mDialog?.show()
     }
 
     private fun getUser(): String {

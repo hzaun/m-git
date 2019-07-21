@@ -2,6 +2,7 @@ package com.nuzharukiya.gitm.utils
 
 import android.app.Activity
 import android.content.Context
+import android.content.pm.PackageManager
 import android.graphics.Rect
 import android.net.ConnectivityManager
 import android.view.View
@@ -49,5 +50,16 @@ class BaseUtils(private val mContext: Context) {
         val keypadHeight = screenHeight - r.bottom
 
         return keypadHeight > screenHeight * 0.15
+    }
+
+    fun getAppVersion(): String {
+        val manager = mContext.packageManager
+        return try {
+            val info = manager.getPackageInfo(mContext.packageName, 0)
+            info.versionName
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
+            "Unknown-01"
+        }
     }
 }
