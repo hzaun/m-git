@@ -169,8 +169,10 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun displayPR(prList: List<PullRequestModel>) {
-        if (CUR_PAGE == 1) prAdapter?.clear()
-        else {
+        if (CUR_PAGE == 1) {
+            prAdapter?.clear()
+            if(prList.isEmpty()) prAdapter?.notifyDataSetChanged()
+        } else {
             prAdapter?.removeLoadingFooter()
         }
 

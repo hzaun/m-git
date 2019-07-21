@@ -42,6 +42,8 @@ class MainActivityPresenter(private val view: MainActivityView) {
             override fun onError(e: Throwable) {
                 view.showSnackbar(resMessage = R.string.check_owner_repo)
                 view.dismissLoader()
+
+                view.displayPR(ArrayList())
             }
 
             override fun onComplete() {
