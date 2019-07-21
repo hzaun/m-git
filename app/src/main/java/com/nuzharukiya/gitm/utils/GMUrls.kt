@@ -1,6 +1,5 @@
 package com.nuzharukiya.gitm.utils
 
-import java.lang.StringBuilder
 import java.net.URI
 
 /**
@@ -17,12 +16,12 @@ interface GMUrls {
         private const val STATE_ALL = "all"
         private const val STATE_OPEN = "open"
 
-        fun buildPullRequestsUrl(owner: String, repos: String): String {
+        fun buildPullRequestsUrl(owner: String, repos: String, page: Int): String {
             val uri = URI(
                     SCHEME,
                     BASE_URL,
                     generatePath(owner, repos),
-                    "state=$STATE_OPEN", // TODO: Change
+                    "state=$STATE_OPEN&page=$page",
                     null)
 
             return uri.toString()

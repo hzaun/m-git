@@ -5,12 +5,13 @@ package com.nuzharukiya.gitm.models
  */
 
 data class PullRequestModel(
-        val title: String,
-        val number: Int,
-        val user: UserModel,
-        val created_at: String
+        val title: String = "",
+        val number: Int = -1,
+        val user: UserModel = UserModel(),
+        val created_at: String = "",
+        val bLoader: Boolean = false
 )
 
 data class UserModel(
-        val login: String
+        val login: String = ""
 )

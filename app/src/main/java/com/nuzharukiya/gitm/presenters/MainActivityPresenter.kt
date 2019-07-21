@@ -19,8 +19,8 @@ import org.json.JSONArray
  */
 class MainActivityPresenter(private val view: MainActivityView) {
 
-    fun getPRObservable(owner: String, repos: String): Observable<JSONArray> {
-        return Rx2AndroidNetworking.get(GMUrls.buildPullRequestsUrl(owner, repos))
+    fun getPRObservable(owner: String, repos: String, page: Int): Observable<JSONArray> {
+        return Rx2AndroidNetworking.get(GMUrls.buildPullRequestsUrl(owner, repos, page))
                 .build()
                 .jsonArrayObservable
                 .subscribeOn(Schedulers.io())

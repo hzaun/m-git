@@ -23,7 +23,7 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import android.text.Editable
 import android.text.TextWatcher
-
+import com.nuzharukiya.gitm.utils.InfiniteScrollListener
 
 class MainActivity : AppCompatActivity(),
         ActivityBase,
@@ -33,8 +33,15 @@ class MainActivity : AppCompatActivity(),
     private lateinit var baseUtils: BaseUtils
     private lateinit var presenter: MainActivityPresenter
 
+    // Pull Request List
     private var prAdapter: PullReqAdapter? = null
-    private val pullRequests = ArrayList<PullRequestModel>()
+    private var lsUser: String = ""
+    private var lsRepo: String = ""
+
+    // Infinite Scroll/ Pagination
+    private var CUR_PAGE = 1
+    private var bIsLoading = false
+    private var bIsLastPage = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +63,8 @@ class MainActivity : AppCompatActivity(),
         checkForNext()
         checkForSearch()
         initLinkListener()
+
+        setPRAdapter()
     }
 
     private fun checkForNext() {
@@ -100,11 +109,21 @@ class MainActivity : AppCompatActivity(),
     private fun getPRs() {
         if (checkNetwork()) {
             if (verifyUserRepo(bShowMessage = true)) {
-                fetchPRs(getUser(), getRepo())
+                lsUser = getUser()
+                lsRepo = getRepo()
+                resetConstraints()
+
+                fetchPRs(lsUser, lsRepo)
             } else {
                 dismissLoader()
             }
         }
+    }
+
+    private fun resetConstraints() {
+        CUR_PAGE = 1
+        bIsLoading = false
+        bIsLastPage = false
     }
 
     override fun initData() {
@@ -135,33 +154,67 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun fetchPRs(user: String, repo: String) {
-        presenter.getPRObservable(user, repo)
+        presenter.getPRObservable(user, repo, CUR_PAGE)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(presenter.getPRObserver())
     }
 
     override fun displayPR(prList: List<PullRequestModel>) {
-        pullRequests.clear()
-        if (prList.isNotEmpty()) pullRequests.addAll(prList)
+        if (CUR_PAGE == 1) prAdapter?.clear()
+        else {
+            prAdapter?.removeLoadingFooter()
+        }
 
-        setAdapter()
+        if (prList.isNotEmpty()) prAdapter?.addAll(prList)
+
+        if (prList.isEmpty() || prList.size % 30 != 0) {
+            bIsLastPage = true
+        }
+        bIsLoading = false
+
+        showNoData(bNoData = prAdapter?.isEmpty() == true)
     }
 
-    private fun setAdapter() {
+    private fun setPRAdapter() {
         if (prAdapter == null) {
-            prAdapter = PullReqAdapter(pullRequests)
+            prAdapter = PullReqAdapter()
 
             rvPullRequests.itemAnimator = DefaultItemAnimator()
-            rvPullRequests.layoutManager = LinearLayoutManager(mContext)
+            val layoutManager = LinearLayoutManager(mContext)
+            rvPullRequests.layoutManager = layoutManager
             rvPullRequests.adapter = prAdapter
-        } else prAdapter?.notifyDataSetChanged()
 
-        showNoData(bNoData = pullRequests.isEmpty())
+            initOnScrollListener(layoutManager)
+        }
+    }
+
+    private fun initOnScrollListener(layoutManager: LinearLayoutManager) {
+        rvPullRequests.addOnScrollListener(object : InfiniteScrollListener(layoutManager) {
+            override fun loadMoreItems() {
+                bIsLoading = true
+                //Increment page index to load the next one
+                CUR_PAGE += 1
+                loadNextPage()
+            }
+
+            override fun isLastPage(): Boolean {
+                return bIsLastPage
+            }
+
+            override fun isLoading(): Boolean {
+                return bIsLoading
+            }
+        })
+    }
+
+    private fun loadNextPage() {
+        if (!bIsLastPage) prAdapter?.addLoadingFooter()
+        fetchPRs(lsUser, lsRepo)
     }
 
     override fun showLoader() {
-        pbLoader.visibility = View.VISIBLE
+        pbLoader.visibility = if (bIsLoading) View.GONE else View.VISIBLE
     }
 
     override fun dismissLoader() {
