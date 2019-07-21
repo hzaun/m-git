@@ -50,6 +50,9 @@ class MainActivity : AppCompatActivity(),
     // Info Dialog
     private var mDialog: Dialog? = null
 
+    // Hint counter
+    private var hintCounter = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -74,14 +77,24 @@ class MainActivity : AppCompatActivity(),
         setPRAdapter()
         scrollToTop()
 
+        initClearFields()
         initAppInfo()
     }
 
-    private fun initAppInfo() {
+    private fun initClearFields() {
         acivGit.setOnLongClickListener {
-            showInfoDialog()
+            etUser.setText("")
+            etRepo.setText("")
 
             true
+        }
+    }
+
+    private fun initAppInfo() {
+        acivGit.setOnClickListener {
+            showInfoDialog()
+
+            if (hintCounter++ < 4) showSnackbar(R.string.hint_clear)
         }
     }
 
