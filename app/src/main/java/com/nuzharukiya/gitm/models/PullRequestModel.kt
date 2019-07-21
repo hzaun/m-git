@@ -9,7 +9,8 @@ data class PullRequestModel(
         val number: Int = -1,
         val user: UserModel = UserModel(),
         val created_at: String = "",
-        val bLoader: Boolean = false
+        val bLoader: Boolean = false,
+        val body: String = ""
 )
 
 data class UserModel(

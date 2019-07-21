@@ -26,6 +26,7 @@ import com.nuzharukiya.gitm.utils.InfiniteScrollListener
 import com.nuzharukiya.gitm.utils.ValidationUtils
 import com.nuzharukiya.gitm.views.MainActivityView
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -52,6 +53,9 @@ class MainActivity : AppCompatActivity(),
 
     // Hint counter
     private var hintCounter = 0
+
+    // OnClick
+    private var subscribeRvClick: Disposable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -236,6 +240,15 @@ class MainActivity : AppCompatActivity(),
 
             initOnScrollListener(layoutManager)
         }
+
+        setupItemClick()
+    }
+
+    private fun setupItemClick() {
+        subscribeRvClick = prAdapter?.clickEvent
+                ?.subscribe {
+                    showSnackbar(sMessage = it.body)
+                }
     }
 
     private fun initOnScrollListener(layoutManager: LinearLayoutManager) {
@@ -295,7 +308,10 @@ class MainActivity : AppCompatActivity(),
 
     override fun showSnackbar(resMessage: Int, sMessage: String) {
         if (sMessage.isNotEmpty())
-            Snackbar.make(clParent, sMessage, Snackbar.LENGTH_LONG).show()
+            Snackbar.make(clParent, sMessage, Snackbar.LENGTH_LONG).apply {
+                view.findViewById<TextView>(R.id.snackbar_text).setSingleLine(false)
+                show()
+            }
         else if (resMessage > 0)
             Snackbar.make(clParent, resources.getString(resMessage), Snackbar.LENGTH_LONG).show()
     }
@@ -340,5 +356,11 @@ class MainActivity : AppCompatActivity(),
 
     private fun getRepo(): String {
         return etRepo.text.toString().trim()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        subscribeRvClick?.dispose()
     }
 }

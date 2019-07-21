@@ -66,7 +66,8 @@ class MainActivityPresenter(private val view: MainActivityView) {
                             o.optJSONObject("user")
                                     .optString("login")
                     ),
-                    o.optString("created_at")
+                    o.optString("created_at"),
+                    body = o.optString("body")
             ))
         }
 

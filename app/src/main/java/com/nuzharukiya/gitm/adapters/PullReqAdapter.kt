@@ -1,6 +1,7 @@
 package com.nuzharukiya.gitm.adapters
 
 import android.content.Context
+import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,8 @@ import com.nuzharukiya.gitm.R
 import com.nuzharukiya.gitm.models.PullRequestModel
 import com.nuzharukiya.gitm.utils.TimeUtils
 import com.nuzharukiya.gitm.utils.inflate
+import io.reactivex.Observable
+import io.reactivex.subjects.PublishSubject
 
 
 /**
@@ -25,6 +28,9 @@ class PullReqAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var bIsLoadingAdded = false
     private val ITEM = 0
     private val LOADING = 1
+
+    // To check onClick
+    private val clickSubject = PublishSubject.create<PullRequestModel>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         mContext = parent.context
@@ -51,6 +57,10 @@ class PullReqAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 holder as ItemViewHolder
                 holder.onBind(prModel)
                 holder.vDivider.visibility = if (position == pullRequests.size - 1) View.GONE else View.VISIBLE
+
+                holder.clParent.setOnClickListener {
+                    clickSubject.onNext(pullRequests[position])
+                }
             }
             LOADING -> {
                 holder as LoaderViewHolder
@@ -59,10 +69,19 @@ class PullReqAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     }
 
-    class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    val clickEvent: Observable<PullRequestModel> = clickSubject
+
+    inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        internal val clParent = itemView.findViewById<ConstraintLayout>(R.id.clParent)
         private val tvTitle = itemView.findViewById<TextView>(R.id.tvTitle)
         private val tvDescription = itemView.findViewById<TextView>(R.id.tvDescription)
         internal val vDivider = itemView.findViewById<View>(R.id.vDivider)
+
+        init {
+            itemView.setOnClickListener {
+                clickSubject.onNext(pullRequests[layoutPosition])
+            }
+        }
 
         fun onBind(prModel: PullRequestModel) {
             tvTitle.text = prModel.title
@@ -72,7 +91,7 @@ class PullReqAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
-    class LoaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class LoaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val pbPagination = itemView.findViewById<ProgressBar>(R.id.pbPagination)
     }
 
