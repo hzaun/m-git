@@ -14,7 +14,7 @@ class ValidationUtils {
     private var matcher: Matcher? = null
 
     companion object {
-        var INSTANCE: ValidationUtils? = null
+        private var INSTANCE: ValidationUtils? = null
 
         fun getInstance(): ValidationUtils {
             if (INSTANCE == null) {

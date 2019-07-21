@@ -132,14 +132,6 @@ class PullReqAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
-    fun remove(item: PullRequestModel) {
-        val position = pullRequests.indexOf(item)
-        if (position > -1) {
-            pullRequests.removeAt(position)
-            notifyItemRemoved(position)
-        }
-    }
-
     private fun getItem(position: Int): PullRequestModel? {
         return pullRequests[position]
     }

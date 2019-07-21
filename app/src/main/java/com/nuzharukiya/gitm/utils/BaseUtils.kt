@@ -7,7 +7,6 @@ import android.graphics.Rect
 import android.net.ConnectivityManager
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.ProgressBar
 
 
 /**
@@ -15,8 +14,6 @@ import android.widget.ProgressBar
  */
 
 class BaseUtils(private val mContext: Context) {
-
-    private var progressBar: ProgressBar? = null
 
     fun isOnline(): Boolean {
         val connectivityManager = mContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
