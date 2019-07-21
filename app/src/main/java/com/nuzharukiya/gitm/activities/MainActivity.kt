@@ -171,6 +171,7 @@ class MainActivity : AppCompatActivity(),
     override fun checkNetwork(): Boolean {
         if (baseUtils.isOnline()) {
             showLoader()
+            baseUtils.forceHideKeyboard()
 
             return true
         }
