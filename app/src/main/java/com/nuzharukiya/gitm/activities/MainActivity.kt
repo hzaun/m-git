@@ -21,6 +21,9 @@ import com.nuzharukiya.gitm.views.MainActivityView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
+import android.text.Editable
+import android.text.TextWatcher
+
 
 class MainActivity : AppCompatActivity(),
         ActivityBase,
@@ -50,10 +53,33 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun initViews() {
+        checkForNext()
+        checkForSearch()
         initLinkListener()
     }
 
-    private fun initLinkListener() {
+    private fun checkForNext() {
+        etUser.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {}
+
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int,
+                                           after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int,
+                                       count: Int) {
+                // Change focus on "/"
+                val str = s.toString()
+                if (str.contains("/")) {
+                    etUser.setText(str.replace("/", ""))
+                    etRepo.isFocusableInTouchMode = true
+                    etRepo.requestFocus()
+                }
+            }
+        })
+    }
+
+    private fun checkForSearch() {
         etRepo.setOnEditorActionListener(object : TextView.OnEditorActionListener {
             override fun onEditorAction(v: TextView, actionId: Int, event: KeyEvent?): Boolean {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
@@ -63,7 +89,9 @@ class MainActivity : AppCompatActivity(),
                 return false
             }
         })
+    }
 
+    private fun initLinkListener() {
         acivLookup.setOnClickListener {
             getPRs()
         }
@@ -87,8 +115,8 @@ class MainActivity : AppCompatActivity(),
         val user = etUser.text.toString().trim()
         val repo = etRepo.text.toString().trim()
 
-        if (user.isNotEmpty() && repo.isNotEmpty()){
-            if(user.length >= 40 || !ValidationUtils.getInstance().validateUsername(user)){
+        if (user.isNotEmpty() && repo.isNotEmpty()) {
+            if (user.length >= 40 || !ValidationUtils.getInstance().validateUsername(user)) {
                 showSnackbar(R.string.invalid_username)
                 return false
             }
