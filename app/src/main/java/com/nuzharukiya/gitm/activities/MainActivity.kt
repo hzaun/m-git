@@ -16,6 +16,7 @@ import com.nuzharukiya.gitm.models.PullRequestModel
 import com.nuzharukiya.gitm.presenters.MainActivityPresenter
 import com.nuzharukiya.gitm.utils.ActivityBase
 import com.nuzharukiya.gitm.utils.BaseUtils
+import com.nuzharukiya.gitm.utils.ValidationUtils
 import com.nuzharukiya.gitm.views.MainActivityView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -86,7 +87,13 @@ class MainActivity : AppCompatActivity(),
         val user = etUser.text.toString().trim()
         val repo = etRepo.text.toString().trim()
 
-        if (user.isNotEmpty() && repo.isNotEmpty()) return true
+        if (user.isNotEmpty() && repo.isNotEmpty()){
+            if(user.length > 40 || !ValidationUtils.getInstance().validateUsername(user)){
+                showSnackbar(R.string.invalid_username)
+                return false
+            }
+            return true
+        }
 
         if (bShowMessage) {
             if (user.isEmpty()) {
