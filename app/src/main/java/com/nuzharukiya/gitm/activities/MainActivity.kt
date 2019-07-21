@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity(),
         val repo = etRepo.text.toString().trim()
 
         if (user.isNotEmpty() && repo.isNotEmpty()){
-            if(user.length > 40 || !ValidationUtils.getInstance().validateUsername(user)){
+            if(user.length >= 40 || !ValidationUtils.getInstance().validateUsername(user)){
                 showSnackbar(R.string.invalid_username)
                 return false
             }

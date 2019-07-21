@@ -8,7 +8,7 @@ import java.util.regex.Pattern
  */
 
 class ValidationUtils {
-    private val GIT_USERNAME_PATTERN = "([a-z0-9]+)(([a-z0-9]*)(-)*([a-z0-9]*))*([a-z0-9]+)"
+    private val GIT_USERNAME_PATTERN = "([a-z0-9]+)(([a-z0-9])(-)?([a-z0-9]*))*([a-z0-9]+)"
 
     private var pattern: Pattern = Pattern.compile(GIT_USERNAME_PATTERN)
     private var matcher: Matcher? = null
